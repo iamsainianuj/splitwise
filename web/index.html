@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>SplitWise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-input: #22222e;
+            --accent-primary: #00d4aa;
+            --accent-secondary: #00a888;
+            --accent-glow: rgba(0, 212, 170, 0.15);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --danger: #ff4466;
+            --warning: #ffaa00;
+            --success: #00d4aa;
+            --gradient-1: linear-gradient(135deg, #00d4aa 0%, #00a888 50%, #007766 100%);
+            --gradient-bg: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0f 50%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            background: var(--bg-primary);
+            background-image: var(--gradient-bg);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            padding: 24px 20px 16px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, transparent 100%);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            padding: 0 16px;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: fit-content;
+            padding: 12px 16px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px 16px;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-count {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-card);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-glow);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        select.form-input {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            padding-right: 40px;
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .checkbox-item.selected {
+            background: var(--accent-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .checkbox-item input {
+            display: none;
+        }
+
+        .checkbox-item .checkmark {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item.selected .checkmark {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .checkbox-item.selected .checkmark::after {
+            content: '✓';
+            color: var(--bg-primary);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--text-muted);
+        }
+
+        /* List Items */
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .list-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        .list-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .list-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .list-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .list-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .list-badge {
+            padding: 6px 12px;
+            background: var(--bg-input);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Balance Display */
+        .balance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .balance-users {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .balance-arrow {
+            color: var(--text-muted);
+        }
+
+        .balance-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .balance-amount.positive {
+            color: var(--success);
+        }
+
+        .balance-amount.negative {
+            color: var(--danger);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 15px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .toast {
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-primary);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 10px;
+            animation: slideDown 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.error {
+            border-color: var(--danger);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Expense Card */
+        .expense-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .expense-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .expense-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .expense-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .expense-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .expense-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Settle Form */
+        .settle-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .settle-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Background Decoration */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            opacity: 0.03;
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: -200px;
+            right: -100px;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: 100px;
+            left: -150px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 360px) {
+            .tab-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">SplitWise</div>
+            <div class="tagline">Split expenses with friends</div>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="users">Users</button>
+            <button class="tab-btn" data-tab="groups">Groups</button>
+            <button class="tab-btn" data-tab="expenses">Expenses</button>
+            <button class="tab-btn" data-tab="balances">Balances</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Users Tab -->
+            <section class="tab-panel active" id="users-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-icon">👤</div>
+                        Create User
+                    </div>
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-input" id="userName" placeholder="Enter full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="userEmail" placeholder="email@example.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>+</span> Create User
+                        </button>
+                    </form>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">All Users</h2>
+                    <span class="section-count" id="userCount">0</span>
+                </div>
+                <div id="usersList"></div>
+            </section>
+
+            <!-- Groups Tab -->
+            <section class="tab-panel" id="groups-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-icon">👥</div>
+                        Create Group
+                    </div>
+                    <form id="createGroupForm">
+                        <div class="form-group">
+                            <label class="form-label">Group Name</label>
+                            <input type="text" class="form-input" id="groupName" placeholder="Enter group name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Members</label>
+                            <div class="checkbox-group" id="memberCheckboxes"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>+</span> Create Group
+                        </button>
+                    </form>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">All Groups</h2>
+                    <span class="section-count" id="groupCount">0</span>
+                </div>
+                <div id="groupsList"></div>
+            </section>
+
+            <!-- Expenses Tab -->
+            <section class="tab-panel" id="expenses-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-icon">💰</div>
+                        Add Expense
+                    </div>
+                    <form id="addExpenseForm">
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-input" id="expenseDescription" placeholder="What was this expense for?" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Amount</label>
+                            <input type="number" class="form-input" id="expenseAmount" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Paid By</label>
+                            <select class="form-input" id="paidByUser" required>
+                                <option value="">Select who paid</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Group</label>
+                            <select class="form-input" id="expenseGroup" required>
+                                <option value="">Select group</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Split Type</label>
+                            <select class="form-input" id="splitType">
+                                <option value="equal">Equal Split</option>
+                                <option value="percentage">Percentage</option>
+                                <option value="exact">Exact Amount</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>+</span> Add Expense
+                        </button>
+                    </form>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Recent Expenses</h2>
+                    <span class="section-count" id="expenseCount">0</span>
+                </div>
+                <div id="expensesList"></div>
+            </section>
+
+            <!-- Balances Tab -->
+            <section class="tab-panel" id="balances-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-icon">🤝</div>
+                        Settle Up
+                    </div>
+                    <form id="settleForm">
+                        <div class="settle-row">
+                            <div class="form-group">
+                                <label class="form-label">From</label>
+                                <select class="form-input" id="settleFrom" required>
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">To</label>
+                                <select class="form-input" id="settleTo" required>
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Amount</label>
+                            <input type="number" class="form-input" id="settleAmount" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            ✓ Settle Balance
+                        </button>
+                    </form>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Current Balances</h2>
+                </div>
+                <div id="balancesList"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        
+        // State
+        let users = [];
+        let groups = [];
+        let expenses = [];
+        let balances = [];
+
+        // Utility functions
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.innerHTML = `<span>${isError ? '⚠️' : '✓'}</span> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        }
+
+        // Tab Navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`${btn.dataset.tab}-panel`).classList.add('active');
+                
+                // Refresh data when switching tabs
+                if (btn.dataset.tab === 'groups') updateMemberCheckboxes();
+                if (btn.dataset.tab === 'expenses') updateExpenseSelects();
+                if (btn.dataset.tab === 'balances') {
+                    updateSettleSelects();
+                    fetchBalances();
+                }
+            });
+        });
+
+        // Checkbox item toggle
+        function setupCheckboxItem(item) {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                item.classList.toggle('selected');
+                const checkbox = item.querySelector('input');
+                checkbox.checked = !checkbox.checked;
+            });
+        }
+
+        // API Functions
+        async function fetchUsers() {
+            try {
+                const res = await fetch(`${API_BASE}/users`);
+                users = await res.json() || [];
+                renderUsers();
+            } catch (e) {
+                console.error('Failed to fetch users:', e);
+            }
+        }
+
+        async function createUser(userData) {
+            try {
+                const res = await fetch(`${API_BASE}/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                const user = await res.json();
+                users.push(user);
+                renderUsers();
+                showToast(`User "${user.user_name}" created!`);
+                return user;
+            } catch (e) {
+                showToast('Failed to create user', true);
+            }
+        }
+
+        async function fetchGroups() {
+            try {
+                const res = await fetch(`${API_BASE}/groups`);
+                groups = await res.json() || [];
+                renderGroups();
+            } catch (e) {
+                console.error('Failed to fetch groups:', e);
+            }
+        }
+
+        async function createGroup(groupData) {
+            try {
+                const res = await fetch(`${API_BASE}/groups`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(groupData)
+                });
+                const group = await res.json();
+                groups.push(group);
+                renderGroups();
+                showToast(`Group "${group.group_name}" created!`);
+                return group;
+            } catch (e) {
+                showToast('Failed to create group', true);
+            }
+        }
+
+        async function fetchExpenses() {
+            try {
+                const res = await fetch(`${API_BASE}/expenses`);
+                expenses = await res.json() || [];
+                renderExpenses();
+            } catch (e) {
+                console.error('Failed to fetch expenses:', e);
+            }
+        }
+
+        async function addExpense(expenseData) {
+            try {
+                const res = await fetch(`${API_BASE}/expenses`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(expenseData)
+                });
+                if (!res.ok) throw new Error('Failed to add expense');
+                await fetchExpenses();
+                await fetchBalances();
+                showToast('Expense added!');
+            } catch (e) {
+                showToast('Failed to add expense', true);
+            }
+        }
+
+        async function fetchBalances() {
+            try {
+                const res = await fetch(`${API_BASE}/balances`);
+                balances = await res.json() || [];
+                renderBalances();
+            } catch (e) {
+                console.error('Failed to fetch balances:', e);
+            }
+        }
+
+        async function settle(settleData) {
+            try {
+                const res = await fetch(`${API_BASE}/settle`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settleData)
+                });
+                await fetchBalances();
+                showToast('Balance settled!');
+            } catch (e) {
+                showToast('Failed to settle', true);
+            }
+        }
+
+        // Render Functions
+        function renderUsers() {
+            const list = document.getElementById('usersList');
+            document.getElementById('userCount').textContent = users.length;
+            
+            if (users.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👤</div>
+                        <p class="empty-state-text">No users yet. Create one above!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = users.map(user => `
+                <div class="list-item">
+                    <div class="list-avatar">${getInitials(user.user_name)}</div>
+                    <div class="list-content">
+                        <div class="list-title">${user.user_name}</div>
+                        <div class="list-subtitle">${user.user_email}</div>
+                    </div>
+                    <div class="list-badge">#${user.user_id.slice(-4)}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderGroups() {
+            const list = document.getElementById('groupsList');
+            document.getElementById('groupCount').textContent = groups.length;
+            
+            if (groups.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👥</div>
+                        <p class="empty-state-text">No groups yet. Create one above!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = groups.map(group => `
+                <div class="list-item">
+                    <div class="list-avatar">${getInitials(group.group_name)}</div>
+                    <div class="list-content">
+                        <div class="list-title">${group.group_name}</div>
+                        <div class="list-subtitle">${group.group_members?.length || 0} members</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderExpenses() {
+            const list = document.getElementById('expensesList');
+            document.getElementById('expenseCount').textContent = expenses.length;
+            
+            if (expenses.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💰</div>
+                        <p class="empty-state-text">No expenses yet. Add one above!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = expenses.map(exp => `
+                <div class="expense-card">
+                    <div class="expense-header">
+                        <div class="expense-title">${exp.expense_description}</div>
+                        <div class="expense-amount">$${exp.expense_amount.toFixed(2)}</div>
+                    </div>
+                    <div class="expense-meta">
+                        <span>👤 ${exp.paid_by_user_name}</span>
+                        <span>👥 ${exp.group_name}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderBalances() {
+            const list = document.getElementById('balancesList');
+            
+            if (balances.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✨</div>
+                        <p class="empty-state-text">All settled up!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            balances.forEach(userBalance => {
+                userBalance.balances.forEach(balance => {
+                    const isPositive = balance.amount > 0;
+                    html += `
+                        <div class="balance-item">
+                            <div class="balance-users">
+                                <strong>${userBalance.user_name}</strong>
+                                <span class="balance-arrow">${isPositive ? '→' : '←'}</span>
+                                <span>${balance.user_name}</span>
+                            </div>
+                            <div class="balance-amount ${isPositive ? 'positive' : 'negative'}">
+                                ${isPositive ? '+' : ''}$${balance.amount.toFixed(2)}
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            list.innerHTML = html;
+        }
+
+        // Update Form Selects
+        function updateMemberCheckboxes() {
+            const container = document.getElementById('memberCheckboxes');
+            container.innerHTML = users.map(user => `
+                <div class="checkbox-item" data-user-id="${user.user_id}">
+                    <input type="checkbox" value="${user.user_id}">
+                    <span class="checkmark"></span>
+                    <span>${user.user_name}</span>
+                </div>
+            `).join('');
+            
+            container.querySelectorAll('.checkbox-item').forEach(setupCheckboxItem);
+        }
+
+        function updateExpenseSelects() {
+            const paidBySelect = document.getElementById('paidByUser');
+            const groupSelect = document.getElementById('expenseGroup');
+            
+            paidBySelect.innerHTML = '<option value="">Select who paid</option>' + 
+                users.map(u => `<option value="${u.user_id}">${u.user_name}</option>`).join('');
+            
+            groupSelect.innerHTML = '<option value="">Select group</option>' + 
+                groups.map(g => `<option value="${g.group_id}">${g.group_name}</option>`).join('');
+        }
+
+        function updateSettleSelects() {
+            const fromSelect = document.getElementById('settleFrom');
+            const toSelect = document.getElementById('settleTo');
+            
+            const options = '<option value="">Select</option>' + 
+                users.map(u => `<option value="${u.user_id}">${u.user_name}</option>`).join('');
+            
+            fromSelect.innerHTML = options;
+            toSelect.innerHTML = options;
+        }
+
+        // Form Handlers
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userName = document.getElementById('userName').value.trim();
+            const userEmail = document.getElementById('userEmail').value.trim();
+            
+            await createUser({
+                user_id: generateId(),
+                user_name: userName,
+                user_email: userEmail
+            });
+            
+            e.target.reset();
+        });
+
+        document.getElementById('createGroupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const groupName = document.getElementById('groupName').value.trim();
+            const selectedMembers = Array.from(
+                document.querySelectorAll('#memberCheckboxes input:checked')
+            ).map(cb => cb.value);
+            
+            if (selectedMembers.length < 2) {
+                showToast('Select at least 2 members', true);
+                return;
+            }
+            
+            await createGroup({
+                group_id: generateId(),
+                group_name: groupName,
+                member_ids: selectedMembers
+            });
+            
+            e.target.reset();
+            document.querySelectorAll('#memberCheckboxes .checkbox-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+        });
+
+        document.getElementById('addExpenseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const description = document.getElementById('expenseDescription').value.trim();
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            const paidByUserId = document.getElementById('paidByUser').value;
+            const groupId = document.getElementById('expenseGroup').value;
+            const splitType = document.getElementById('splitType').value;
+            
+            // Get group members for split data
+            const group = groups.find(g => g.group_id === groupId);
+            if (!group) {
+                showToast('Please select a group', true);
+                return;
+            }
+            
+            // Create split data based on split type
+            const splitData = {};
+            const members = group.group_members || [];
+            members.forEach(member => {
+                if (splitType === 'equal') {
+                    splitData[member.user_id] = amount / members.length;
+                } else if (splitType === 'percentage') {
+                    splitData[member.user_id] = 100 / members.length;
+                } else {
+                    splitData[member.user_id] = amount / members.length;
+                }
+            });
+            
+            await addExpense({
+                expense_id: generateId(),
+                expense_description: description,
+                expense_amount: amount,
+                paid_by_user_id: paidByUserId,
+                group_id: groupId,
+                split_type: splitType,
+                split_data: splitData
+            });
+            
+            e.target.reset();
+        });
+
+        document.getElementById('settleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fromUserId = document.getElementById('settleFrom').value;
+            const toUserId = document.getElementById('settleTo').value;
+            const amount = parseFloat(document.getElementById('settleAmount').value);
+            
+            if (fromUserId === toUserId) {
+                showToast('Select different users', true);
+                return;
+            }
+            
+            await settle({
+                from_user_id: fromUserId,
+                to_user_id: toUserId,
+                amount: amount
+            });
+            
+            e.target.reset();
+        });
+
+        // Initialize
+        async function init() {
+            await Promise.all([
+                fetchUsers(),
+                fetchGroups(),
+                fetchExpenses(),
+                fetchBalances()
+            ]);
+        }
+
+        init();
+    </script>
+</body>
+</html>
+

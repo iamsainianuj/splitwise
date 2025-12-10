@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: splitwise
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 10000
+
