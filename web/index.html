@@ -29,11 +29,7 @@
             --gradient-bg: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0f 50%);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Bricolage Grotesque', sans-serif;
@@ -49,163 +45,50 @@
             margin: 0 auto;
             min-height: 100vh;
             position: relative;
-            padding-bottom: 80px;
         }
 
-        /* Header */
-        .header {
-            padding: 24px 20px 16px;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, transparent 100%);
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 2px;
-            background: var(--gradient-1);
-            border-radius: 2px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-
-        .tagline {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        /* Tab Navigation */
-        .tab-nav {
-            display: flex;
-            padding: 0 16px;
-            gap: 6px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .tab-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            flex: 1;
-            min-width: fit-content;
-            padding: 12px 16px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-secondary);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .tab-btn:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .tab-btn.active {
-            background: var(--accent-glow);
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 20px 16px;
-        }
-
-        .tab-panel {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
+        /* Views */
+        .view { display: none; padding: 20px 16px; min-height: 100vh; }
+        .view.active { display: block; animation: fadeIn 0.3s ease; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .section-count {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--bg-card);
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .card-header {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-header-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--accent-glow);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
+        /* Auth Views */
+        .auth-view {
+            flex-direction: column;
             justify-content: center;
-            font-size: 16px;
+            padding-top: 60px;
+        }
+
+        .auth-view.active {
+            display: flex;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
 
         /* Form Elements */
-        .form-group {
-            margin-bottom: 16px;
-        }
+        .form-group { margin-bottom: 20px; }
 
         .form-label {
             display: block;
@@ -219,13 +102,13 @@
 
         .form-input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px;
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             color: var(--text-primary);
             font-family: inherit;
-            font-size: 15px;
+            font-size: 16px;
             transition: all 0.2s ease;
         }
 
@@ -235,9 +118,7 @@
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
+        .form-input::placeholder { color: var(--text-muted); }
 
         select.form-input {
             cursor: pointer;
@@ -245,63 +126,7 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
-            background-size: 18px;
             padding-right: 40px;
-        }
-
-        /* Checkbox Group */
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .checkbox-item:hover {
-            border-color: var(--accent-primary);
-        }
-
-        .checkbox-item.selected {
-            background: var(--accent-glow);
-            border-color: var(--accent-primary);
-        }
-
-        .checkbox-item input {
-            display: none;
-        }
-
-        .checkbox-item .checkmark {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--border-color);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .checkbox-item.selected .checkmark {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-        }
-
-        .checkbox-item.selected .checkmark::after {
-            content: '✓';
-            color: var(--bg-primary);
-            font-size: 12px;
-            font-weight: 700;
         }
 
         /* Buttons */
@@ -311,7 +136,7 @@
             border: none;
             border-radius: 12px;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -331,92 +156,381 @@
             box-shadow: 0 8px 24px var(--accent-glow);
         }
 
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
         .btn-secondary {
             background: var(--bg-input);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
 
-        .btn-secondary:hover {
-            background: var(--bg-card);
-            border-color: var(--text-muted);
+        .btn-small {
+            padding: 10px 16px;
+            font-size: 14px;
+            width: auto;
         }
 
-        /* List Items */
-        .list-item {
+        .auth-switch {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .auth-switch a, .auth-switch button {
+            color: var(--accent-primary);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 0;
+        }
+
+        .auth-switch a:hover, .auth-switch button:hover {
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            background: rgba(255, 68, 102, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Balance Summary */
+        .balance-summary {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .balance-card {
+            flex: 1;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .balance-card.owe {
+            border: 1px solid var(--danger);
+            background: rgba(255, 68, 102, 0.05);
+        }
+
+        .balance-card.owed {
+            border: 1px solid var(--success);
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        .balance-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .balance-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .balance-card.owe .balance-value { color: var(--danger); }
+        .balance-card.owed .balance-value { color: var(--success); }
+
+        /* Dashboard Header */
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .dash-logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-menu {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 16px;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--bg-primary);
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Section */
+        .section { margin-bottom: 24px; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            margin-bottom: 10px;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .list-item:hover {
+        .card:hover {
             border-color: var(--accent-primary);
             transform: translateX(4px);
         }
 
-        .list-avatar {
-            width: 44px;
-            height: 44px;
-            background: var(--gradient-1);
-            border-radius: 12px;
+        .card-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 16px;
             font-weight: 600;
-            color: var(--bg-primary);
-            flex-shrink: 0;
         }
 
-        .list-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .list-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .list-subtitle {
+        .card-subtitle {
             font-size: 13px;
             color: var(--text-secondary);
-            margin-top: 2px;
         }
 
-        .list-badge {
-            padding: 6px 12px;
-            background: var(--bg-input);
+        .card-badge {
+            padding: 4px 10px;
+            background: var(--accent-glow);
             border-radius: 20px;
             font-size: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
+            color: var(--accent-primary);
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Balance Display */
+        .group-balance {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .group-balance-chip {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .group-balance-chip.owe {
+            background: rgba(255, 68, 102, 0.15);
+            color: var(--danger);
+        }
+
+        .group-balance-chip.owed {
+            background: rgba(0, 212, 170, 0.15);
+            color: var(--success);
+        }
+
+        .group-balance-chip.settled {
+            background: var(--bg-input);
+            color: var(--text-muted);
+        }
+
+        .pending-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--warning);
+            border-radius: 50%;
+            margin-left: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Group Detail View */
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            background: none;
+            border: none;
+        }
+
+        .group-header {
+            margin-bottom: 24px;
+        }
+
+        .group-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .group-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .member-chip {
+            padding: 6px 12px;
+            background: var(--bg-input);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Expense Item */
+        .expense-item {
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .expense-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .expense-info { flex: 1; }
+        .expense-desc { font-weight: 600; font-size: 16px; }
+        .expense-payer { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+        .expense-splits {
+            background: var(--bg-input);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .expense-splits-title {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .split-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .split-item:last-child { border-bottom: none; }
+
+        .split-owes {
+            color: var(--text-secondary);
+        }
+
+        .split-arrow {
+            color: var(--text-muted);
+            margin: 0 6px;
+        }
+
+        .split-amount {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .expense-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        /* Balance Item */
         .balance-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 16px;
-            background: var(--bg-input);
+            padding: 16px;
+            background: var(--bg-card);
             border-radius: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .balance-users {
@@ -426,22 +540,107 @@
             font-size: 14px;
         }
 
-        .balance-arrow {
-            color: var(--text-muted);
-        }
+        .balance-arrow { color: var(--text-muted); }
 
         .balance-amount {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
             font-weight: 600;
         }
 
-        .balance-amount.positive {
-            color: var(--success);
+        .balance-amount.owes { color: var(--danger); }
+        .balance-amount.owed { color: var(--success); }
+
+        .settle-btn {
+            padding: 8px 16px;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 12px;
         }
 
-        .balance-amount.negative {
-            color: var(--danger);
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title { font-size: 18px; font-weight: 600; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Search Results */
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .search-item:hover { background: var(--bg-input); }
+        .search-item.selected { border: 1px solid var(--accent-primary); }
+
+        .search-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--bg-primary);
         }
 
         /* Empty State */
@@ -451,17 +650,10 @@
             color: var(--text-muted);
         }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
+        .empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+        .empty-state-text { font-size: 15px; }
 
-        .empty-state-text {
-            font-size: 15px;
-        }
-
-        /* Toast Notifications */
+        /* Toast */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -477,308 +669,245 @@
             background: var(--bg-card);
             border: 1px solid var(--accent-primary);
             border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 14px;
             margin-bottom: 10px;
-            animation: slideDown 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s ease;
         }
 
-        .toast.error {
-            border-color: var(--danger);
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Expense Card */
-        .expense-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .expense-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .expense-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .expense-amount {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent-primary);
-        }
-
-        .expense-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .expense-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Settle Form */
-        .settle-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .settle-row .form-group {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        /* Background Decoration */
-        .bg-decoration {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            opacity: 0.03;
-        }
-
-        .bg-circle:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            top: -200px;
-            right: -100px;
-        }
-
-        .bg-circle:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            bottom: 100px;
-            left: -150px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 360px) {
-            .tab-btn {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
-        }
+        .toast.error { border-color: var(--danger); }
     </style>
 </head>
 <body>
-    <div class="bg-decoration">
-        <div class="bg-circle"></div>
-        <div class="bg-circle"></div>
-    </div>
-
     <div class="toast-container" id="toastContainer"></div>
 
     <div class="app-container">
-        <header class="header">
-            <div class="logo">SplitWise</div>
-            <div class="tagline">Split expenses with friends</div>
-        </header>
-
-        <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="users">Users</button>
-            <button class="tab-btn" data-tab="groups">Groups</button>
-            <button class="tab-btn" data-tab="expenses">Expenses</button>
-            <button class="tab-btn" data-tab="balances">Balances</button>
-        </nav>
-
-        <main class="main-content">
-            <!-- Users Tab -->
-            <section class="tab-panel active" id="users-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-icon">👤</div>
-                        Create User
-                    </div>
-                    <form id="createUserForm">
-                        <div class="form-group">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-input" id="userName" placeholder="Enter full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-input" id="userEmail" placeholder="email@example.com" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>+</span> Create User
-                        </button>
-                    </form>
+        <!-- LOGIN VIEW -->
+        <div class="view auth-view active" id="loginView">
+            <div class="auth-header">
+                <div class="logo">SplitWise</div>
+                <div class="tagline">Split expenses with friends</div>
+            </div>
+            <div class="error-msg" id="loginError"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="you@example.com" required>
                 </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <div class="auth-switch">
+                Don't have an account? <button type="button" id="goToRegister">Sign Up</button>
+            </div>
+        </div>
 
+        <!-- REGISTER VIEW -->
+        <div class="view auth-view" id="registerView">
+            <div class="auth-header">
+                <div class="logo">SplitWise</div>
+                <div class="tagline">Create your account</div>
+            </div>
+            <div class="error-msg" id="registerError"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="registerName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="registerEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="registerPassword" placeholder="Min 6 characters" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+            <div class="auth-switch">
+                Already have an account? <button type="button" id="goToLogin">Sign In</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div class="view" id="dashboardView">
+            <div class="dash-header">
+                <div class="dash-logo">SplitWise</div>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Balance Summary -->
+            <div class="balance-summary">
+                <div class="balance-card owe">
+                    <div class="balance-label">You Owe</div>
+                    <div class="balance-value" id="totalYouOwe">$0.00</div>
+                </div>
+                <div class="balance-card owed">
+                    <div class="balance-label">You're Owed</div>
+                    <div class="balance-value" id="totalOwedToYou">$0.00</div>
+                </div>
+            </div>
+
+            <div class="section">
                 <div class="section-header">
-                    <h2 class="section-title">All Users</h2>
-                    <span class="section-count" id="userCount">0</span>
-                </div>
-                <div id="usersList"></div>
-            </section>
-
-            <!-- Groups Tab -->
-            <section class="tab-panel" id="groups-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-icon">👥</div>
-                        Create Group
-                    </div>
-                    <form id="createGroupForm">
-                        <div class="form-group">
-                            <label class="form-label">Group Name</label>
-                            <input type="text" class="form-input" id="groupName" placeholder="Enter group name" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Select Members</label>
-                            <div class="checkbox-group" id="memberCheckboxes"></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>+</span> Create Group
-                        </button>
-                    </form>
-                </div>
-
-                <div class="section-header">
-                    <h2 class="section-title">All Groups</h2>
-                    <span class="section-count" id="groupCount">0</span>
+                    <h2 class="section-title">My Groups</h2>
+                    <button class="btn btn-small btn-primary" onclick="openModal('createGroupModal')">+ New</button>
                 </div>
                 <div id="groupsList"></div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Expenses Tab -->
-            <section class="tab-panel" id="expenses-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-icon">💰</div>
-                        Add Expense
-                    </div>
-                    <form id="addExpenseForm">
-                        <div class="form-group">
-                            <label class="form-label">Description</label>
-                            <input type="text" class="form-input" id="expenseDescription" placeholder="What was this expense for?" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Amount</label>
-                            <input type="number" class="form-input" id="expenseAmount" placeholder="0.00" step="0.01" min="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Paid By</label>
-                            <select class="form-input" id="paidByUser" required>
-                                <option value="">Select who paid</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Group</label>
-                            <select class="form-input" id="expenseGroup" required>
-                                <option value="">Select group</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Split Type</label>
-                            <select class="form-input" id="splitType">
-                                <option value="equal">Equal Split</option>
-                                <option value="percentage">Percentage</option>
-                                <option value="exact">Exact Amount</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>+</span> Add Expense
-                        </button>
-                    </form>
+        <!-- GROUP DETAIL VIEW -->
+        <div class="view" id="groupDetailView">
+            <button class="back-btn" onclick="showView('dashboardView'); loadGroups();">← Back to Groups</button>
+            
+            <div class="group-header">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h1 class="group-name" id="groupName">Group Name</h1>
+                    <button class="btn btn-small btn-secondary" onclick="openModal('addMemberModal')">+ Add Member</button>
                 </div>
+                <div class="group-members" id="groupMembers"></div>
+            </div>
 
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('expenses')">Expenses</button>
+                <button class="tab-btn" onclick="switchTab('balances')">Balances</button>
+            </div>
+
+            <div class="tab-content active" id="expensesTab">
                 <div class="section-header">
-                    <h2 class="section-title">Recent Expenses</h2>
-                    <span class="section-count" id="expenseCount">0</span>
+                    <span></span>
+                    <button class="btn btn-small btn-primary" onclick="openModal('addExpenseModal')">+ Add Expense</button>
                 </div>
                 <div id="expensesList"></div>
-            </section>
+            </div>
 
-            <!-- Balances Tab -->
-            <section class="tab-panel" id="balances-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-icon">🤝</div>
-                        Settle Up
-                    </div>
-                    <form id="settleForm">
-                        <div class="settle-row">
-                            <div class="form-group">
-                                <label class="form-label">From</label>
-                                <select class="form-input" id="settleFrom" required>
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">To</label>
-                                <select class="form-input" id="settleTo" required>
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Amount</label>
-                            <input type="number" class="form-input" id="settleAmount" placeholder="0.00" step="0.01" min="0" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            ✓ Settle Balance
-                        </button>
-                    </form>
-                </div>
-
-                <div class="section-header">
-                    <h2 class="section-title">Current Balances</h2>
-                </div>
+            <div class="tab-content" id="balancesTab">
                 <div id="balancesList"></div>
-            </section>
-        </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE GROUP MODAL -->
+    <div class="modal" id="createGroupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Group</h3>
+                <button class="modal-close" onclick="closeModal('createGroupModal')">×</button>
+            </div>
+            <form id="createGroupForm">
+                <div class="form-group">
+                    <label class="form-label">Group Name</label>
+                    <input type="text" class="form-input" id="newGroupName" placeholder="Trip to Goa" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Add Members (search by name or email)</label>
+                    <input type="text" class="form-input" id="memberSearch" placeholder="Search users..." oninput="searchUsers()">
+                </div>
+                <div class="search-results" id="searchResults"></div>
+                <div class="form-group">
+                    <label class="form-label">Selected Members</label>
+                    <div id="selectedMembers" class="group-members"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Group</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD EXPENSE MODAL -->
+    <div class="modal" id="addExpenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('addExpenseModal')">×</button>
+            </div>
+            <form id="addExpenseForm">
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-input" id="expenseDesc" placeholder="Dinner, Uber, etc." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="number" class="form-input" id="expenseAmount" placeholder="0.00" step="0.01" required oninput="onSplitTypeChange()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Paid By</label>
+                    <select class="form-input" id="expensePaidBy" required>
+                        <option value="">Select who paid</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Split Type</label>
+                    <select class="form-input" id="splitType" onchange="onSplitTypeChange()">
+                        <option value="equal">Split Equally</option>
+                        <option value="exact">Exact Amounts</option>
+                        <option value="percentage">By Percentage</option>
+                    </select>
+                </div>
+                <div id="splitDetailsContainer" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Split Details</label>
+                        <div id="splitMembersList"></div>
+                        <div id="splitTotalInfo" style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Expense</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD MEMBER TO GROUP MODAL -->
+    <div class="modal" id="addMemberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Member to Group</h3>
+                <button class="modal-close" onclick="closeModal('addMemberModal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Search by name or email</label>
+                <input type="text" class="form-input" id="addMemberSearch" placeholder="Search users..." oninput="searchUsersForGroup()">
+            </div>
+            <div class="search-results" id="addMemberResults"></div>
+        </div>
+    </div>
+
+    <!-- SETTLE MODAL -->
+    <div class="modal" id="settleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Settle Up</h3>
+                <button class="modal-close" onclick="closeModal('settleModal')">×</button>
+            </div>
+            <form id="settleForm">
+                <p style="margin-bottom:16px; color: var(--text-secondary);">
+                    You are paying <strong id="settleToName"></strong>
+                </p>
+                <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="number" class="form-input" id="settleAmount" placeholder="0.00" step="0.01" required>
+                </div>
+                <input type="hidden" id="settleToUserId">
+                <button type="submit" class="btn btn-primary">Pay</button>
+            </form>
+        </div>
     </div>
 
     <script>
-        const API_BASE = '/api';
-        
-        // State
-        let users = [];
-        let groups = [];
-        let expenses = [];
-        let balances = [];
+        const API = '/api';
+        let currentUser = null;
+        let currentGroup = null;
+        let selectedMembers = [];
 
-        // Utility functions
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        }
-
-        function showToast(message, isError = false) {
+        // ============ UTILITIES ============
+        function showToast(msg, isError = false) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast ${isError ? 'error' : ''}`;
-            toast.innerHTML = `<span>${isError ? '⚠️' : '✓'}</span> ${message}`;
+            toast.textContent = msg;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
@@ -787,404 +916,576 @@
             return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
         }
 
-        // Tab Navigation
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(`${btn.dataset.tab}-panel`).classList.add('active');
-                
-                // Refresh data when switching tabs
-                if (btn.dataset.tab === 'groups') updateMemberCheckboxes();
-                if (btn.dataset.tab === 'expenses') updateExpenseSelects();
-                if (btn.dataset.tab === 'balances') {
-                    updateSettleSelects();
-                    fetchBalances();
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // ============ AUTH ============
+        async function checkAuth() {
+            try {
+                const res = await fetch(`${API}/auth/me`, { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    currentUser = data;
+                    document.getElementById('userAvatar').textContent = getInitials(data.user_name);
+                    showView('dashboardView');
+                    loadGroups();
                 }
+            } catch (e) {}
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const res = await fetch(`${API}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ email, password })
             });
+            const data = await res.json();
+            
+            if (data.success) {
+                currentUser = data;
+                document.getElementById('userAvatar').textContent = getInitials(data.user_name);
+                showView('dashboardView');
+                loadGroups();
+            } else {
+                document.getElementById('loginError').textContent = data.message;
+                document.getElementById('loginError').style.display = 'block';
+            }
         });
 
-        // Checkbox item toggle
-        function setupCheckboxItem(item) {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                item.classList.toggle('selected');
-                const checkbox = item.querySelector('input');
-                checkbox.checked = !checkbox.checked;
-            });
-        }
-
-        // API Functions
-        async function fetchUsers() {
-            try {
-                const res = await fetch(`${API_BASE}/users`);
-                users = await res.json() || [];
-                renderUsers();
-            } catch (e) {
-                console.error('Failed to fetch users:', e);
-            }
-        }
-
-        async function createUser(userData) {
-            try {
-                const res = await fetch(`${API_BASE}/users`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(userData)
-                });
-                const user = await res.json();
-                users.push(user);
-                renderUsers();
-                showToast(`User "${user.user_name}" created!`);
-                return user;
-            } catch (e) {
-                showToast('Failed to create user', true);
-            }
-        }
-
-        async function fetchGroups() {
-            try {
-                const res = await fetch(`${API_BASE}/groups`);
-                groups = await res.json() || [];
-                renderGroups();
-            } catch (e) {
-                console.error('Failed to fetch groups:', e);
-            }
-        }
-
-        async function createGroup(groupData) {
-            try {
-                const res = await fetch(`${API_BASE}/groups`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(groupData)
-                });
-                const group = await res.json();
-                groups.push(group);
-                renderGroups();
-                showToast(`Group "${group.group_name}" created!`);
-                return group;
-            } catch (e) {
-                showToast('Failed to create group', true);
-            }
-        }
-
-        async function fetchExpenses() {
-            try {
-                const res = await fetch(`${API_BASE}/expenses`);
-                expenses = await res.json() || [];
-                renderExpenses();
-            } catch (e) {
-                console.error('Failed to fetch expenses:', e);
-            }
-        }
-
-        async function addExpense(expenseData) {
-            try {
-                const res = await fetch(`${API_BASE}/expenses`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(expenseData)
-                });
-                if (!res.ok) throw new Error('Failed to add expense');
-                await fetchExpenses();
-                await fetchBalances();
-                showToast('Expense added!');
-            } catch (e) {
-                showToast('Failed to add expense', true);
-            }
-        }
-
-        async function fetchBalances() {
-            try {
-                const res = await fetch(`${API_BASE}/balances`);
-                balances = await res.json() || [];
-                renderBalances();
-            } catch (e) {
-                console.error('Failed to fetch balances:', e);
-            }
-        }
-
-        async function settle(settleData) {
-            try {
-                const res = await fetch(`${API_BASE}/settle`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(settleData)
-                });
-                await fetchBalances();
-                showToast('Balance settled!');
-            } catch (e) {
-                showToast('Failed to settle', true);
-            }
-        }
-
-        // Render Functions
-        function renderUsers() {
-            const list = document.getElementById('usersList');
-            document.getElementById('userCount').textContent = users.length;
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user_name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
             
-            if (users.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">👤</div>
-                        <p class="empty-state-text">No users yet. Create one above!</p>
-                    </div>
-                `;
+            const res = await fetch(`${API}/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ user_name, email, password })
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                currentUser = data;
+                document.getElementById('userAvatar').textContent = getInitials(data.user_name);
+                showView('dashboardView');
+                loadGroups();
+            } else {
+                document.getElementById('registerError').textContent = data.message;
+                document.getElementById('registerError').style.display = 'block';
+            }
+        });
+
+        async function logout() {
+            await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
+            currentUser = null;
+            showView('loginView');
+        }
+
+        // ============ BALANCE SUMMARY ============
+        async function loadBalanceSummary() {
+            try {
+                const res = await fetch(`${API}/balances/summary`, { credentials: 'include' });
+                if (!res.ok) return;
+                const summary = await res.json();
+                
+                document.getElementById('totalYouOwe').textContent = `$${summary.total_you_owe.toFixed(2)}`;
+                document.getElementById('totalOwedToYou').textContent = `$${summary.total_owed_to_you.toFixed(2)}`;
+            } catch (e) {
+                console.error('Failed to load balance summary:', e);
+            }
+        }
+
+        // ============ GROUPS ============
+        async function loadGroups() {
+            const res = await fetch(`${API}/groups`, { credentials: 'include' });
+            if (res.status === 401) {
+                showView('loginView');
                 return;
             }
-
-            list.innerHTML = users.map(user => `
-                <div class="list-item">
-                    <div class="list-avatar">${getInitials(user.user_name)}</div>
-                    <div class="list-content">
-                        <div class="list-title">${user.user_name}</div>
-                        <div class="list-subtitle">${user.user_email}</div>
-                    </div>
-                    <div class="list-badge">#${user.user_id.slice(-4)}</div>
-                </div>
-            `).join('');
-        }
-
-        function renderGroups() {
-            const list = document.getElementById('groupsList');
-            document.getElementById('groupCount').textContent = groups.length;
+            const groups = await res.json() || [];
             
+            // Also load balance summary
+            loadBalanceSummary();
+            
+            const list = document.getElementById('groupsList');
             if (groups.length === 0) {
                 list.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">👥</div>
-                        <p class="empty-state-text">No groups yet. Create one above!</p>
+                        <p class="empty-state-text">No groups yet. Create one to start!</p>
                     </div>
                 `;
                 return;
             }
 
-            list.innerHTML = groups.map(group => `
-                <div class="list-item">
-                    <div class="list-avatar">${getInitials(group.group_name)}</div>
-                    <div class="list-content">
-                        <div class="list-title">${group.group_name}</div>
-                        <div class="list-subtitle">${group.group_members?.length || 0} members</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderExpenses() {
-            const list = document.getElementById('expensesList');
-            document.getElementById('expenseCount').textContent = expenses.length;
-            
-            if (expenses.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">💰</div>
-                        <p class="empty-state-text">No expenses yet. Add one above!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = expenses.map(exp => `
-                <div class="expense-card">
-                    <div class="expense-header">
-                        <div class="expense-title">${exp.expense_description}</div>
-                        <div class="expense-amount">$${exp.expense_amount.toFixed(2)}</div>
-                    </div>
-                    <div class="expense-meta">
-                        <span>👤 ${exp.paid_by_user_name}</span>
-                        <span>👥 ${exp.group_name}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderBalances() {
-            const list = document.getElementById('balancesList');
-            
-            if (balances.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">✨</div>
-                        <p class="empty-state-text">All settled up!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            balances.forEach(userBalance => {
-                userBalance.balances.forEach(balance => {
-                    const isPositive = balance.amount > 0;
-                    html += `
-                        <div class="balance-item">
-                            <div class="balance-users">
-                                <strong>${userBalance.user_name}</strong>
-                                <span class="balance-arrow">${isPositive ? '→' : '←'}</span>
-                                <span>${balance.user_name}</span>
-                            </div>
-                            <div class="balance-amount ${isPositive ? 'positive' : 'negative'}">
-                                ${isPositive ? '+' : ''}$${balance.amount.toFixed(2)}
-                            </div>
+            list.innerHTML = groups.map(g => {
+                let balanceHtml = '';
+                if (g.you_owe > 0.10 || g.you_are_owed > 0.10) {
+                    balanceHtml = '<div class="group-balance">';
+                    if (g.you_owe > 0.10) {
+                        balanceHtml += `<span class="group-balance-chip owe">You owe $${g.you_owe.toFixed(2)}</span>`;
+                    }
+                    if (g.you_are_owed > 0.10) {
+                        balanceHtml += `<span class="group-balance-chip owed">Owed $${g.you_are_owed.toFixed(2)}</span>`;
+                    }
+                    balanceHtml += '</div>';
+                } else {
+                    balanceHtml = '<div class="group-balance"><span class="group-balance-chip settled">✓ All settled</span></div>';
+                }
+                
+                return `
+                    <div class="card" onclick="openGroup('${g.group_id}')">
+                        <div class="card-header">
+                            <span class="card-title">
+                                ${g.group_name}
+                                ${g.has_pending ? '<span class="pending-dot" title="Pending settlements"></span>' : ''}
+                            </span>
+                            <span class="card-badge">${g.group_members?.length || 0} members</span>
                         </div>
-                    `;
-                });
-            });
-            list.innerHTML = html;
+                        ${balanceHtml}
+                    </div>
+                `;
+            }).join('');
         }
 
-        // Update Form Selects
-        function updateMemberCheckboxes() {
-            const container = document.getElementById('memberCheckboxes');
-            container.innerHTML = users.map(user => `
-                <div class="checkbox-item" data-user-id="${user.user_id}">
-                    <input type="checkbox" value="${user.user_id}">
-                    <span class="checkmark"></span>
-                    <span>${user.user_name}</span>
+        async function searchUsers() {
+            const query = document.getElementById('memberSearch').value;
+            if (query.length < 2) {
+                document.getElementById('searchResults').innerHTML = '';
+                return;
+            }
+
+            const res = await fetch(`${API}/users/search?q=${encodeURIComponent(query)}`, {
+                credentials: 'include'
+            });
+            const users = await res.json() || [];
+
+            document.getElementById('searchResults').innerHTML = users.map(u => `
+                <div class="search-item ${selectedMembers.find(m => m.user_id === u.user_id) ? 'selected' : ''}" 
+                     onclick="toggleMember('${u.user_id}', '${u.user_name}')">
+                    <div class="search-avatar">${getInitials(u.user_name)}</div>
+                    <div>
+                        <div>${u.user_name}</div>
+                        <div style="font-size:12px;color:var(--text-muted)">${u.user_email}</div>
+                    </div>
                 </div>
             `).join('');
-            
-            container.querySelectorAll('.checkbox-item').forEach(setupCheckboxItem);
         }
 
-        function updateExpenseSelects() {
-            const paidBySelect = document.getElementById('paidByUser');
-            const groupSelect = document.getElementById('expenseGroup');
-            
-            paidBySelect.innerHTML = '<option value="">Select who paid</option>' + 
-                users.map(u => `<option value="${u.user_id}">${u.user_name}</option>`).join('');
-            
-            groupSelect.innerHTML = '<option value="">Select group</option>' + 
-                groups.map(g => `<option value="${g.group_id}">${g.group_name}</option>`).join('');
+        function toggleMember(userId, userName) {
+            const idx = selectedMembers.findIndex(m => m.user_id === userId);
+            if (idx >= 0) {
+                selectedMembers.splice(idx, 1);
+            } else {
+                selectedMembers.push({ user_id: userId, user_name: userName });
+            }
+            renderSelectedMembers();
+            searchUsers();
         }
 
-        function updateSettleSelects() {
-            const fromSelect = document.getElementById('settleFrom');
-            const toSelect = document.getElementById('settleTo');
-            
-            const options = '<option value="">Select</option>' + 
-                users.map(u => `<option value="${u.user_id}">${u.user_name}</option>`).join('');
-            
-            fromSelect.innerHTML = options;
-            toSelect.innerHTML = options;
+        function renderSelectedMembers() {
+            document.getElementById('selectedMembers').innerHTML = selectedMembers.map(m => 
+                `<span class="member-chip">${m.user_name} ×</span>`
+            ).join('');
         }
 
-        // Form Handlers
-        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const userName = document.getElementById('userName').value.trim();
-            const userEmail = document.getElementById('userEmail').value.trim();
-            
-            await createUser({
-                user_id: generateId(),
-                user_name: userName,
-                user_email: userEmail
+        // Search users to add to existing group
+        async function searchUsersForGroup() {
+            const query = document.getElementById('addMemberSearch').value;
+            if (query.length < 2) {
+                document.getElementById('addMemberResults').innerHTML = '';
+                return;
+            }
+
+            const res = await fetch(`${API}/users/search?q=${encodeURIComponent(query)}`, {
+                credentials: 'include'
             });
-            
-            e.target.reset();
-        });
+            const users = await res.json() || [];
+
+            document.getElementById('addMemberResults').innerHTML = users.map(u => `
+                <div class="search-item" onclick="addMemberToCurrentGroup('${u.user_id}', '${u.user_name}')">
+                    <div class="search-avatar">${getInitials(u.user_name)}</div>
+                    <div>
+                        <div>${u.user_name}</div>
+                        <div style="font-size:12px;color:var(--text-muted)">${u.user_email}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function addMemberToCurrentGroup(userId, userName) {
+            const res = await fetch(`${API}/groups/add-member`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    group_id: currentGroup,
+                    user_id: userId
+                })
+            });
+
+            if (res.ok) {
+                showToast(`${userName} added to group!`);
+                closeModal('addMemberModal');
+                document.getElementById('addMemberSearch').value = '';
+                document.getElementById('addMemberResults').innerHTML = '';
+                openGroup(currentGroup); // Refresh group details
+            } else {
+                showToast('Failed to add member', true);
+            }
+        }
 
         document.getElementById('createGroupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const groupName = document.getElementById('groupName').value.trim();
-            const selectedMembers = Array.from(
-                document.querySelectorAll('#memberCheckboxes input:checked')
-            ).map(cb => cb.value);
+            const groupName = document.getElementById('newGroupName').value;
             
-            if (selectedMembers.length < 2) {
-                showToast('Select at least 2 members', true);
+            const res = await fetch(`${API}/groups`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    group_name: groupName,
+                    member_ids: selectedMembers.map(m => m.user_id)
+                })
+            });
+
+            if (res.ok) {
+                showToast('Group created!');
+                closeModal('createGroupModal');
+                document.getElementById('createGroupForm').reset();
+                selectedMembers = [];
+                renderSelectedMembers();
+                document.getElementById('searchResults').innerHTML = '';
+                loadGroups();
+            } else {
+                showToast('Failed to create group', true);
+            }
+        });
+
+        // ============ GROUP DETAIL ============
+        let currentGroupMembers = [];
+        
+        async function openGroup(groupId) {
+            currentGroup = groupId;
+            
+            try {
+                const res = await fetch(`${API}/groups/details?id=${groupId}`, { credentials: 'include' });
+                if (res.status === 401) {
+                    // Session expired, redirect to login
+                    showToast('Session expired, please login again', true);
+                    showView('loginView');
+                    return;
+                }
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error('Group load error:', res.status, errText);
+                    showToast('Failed to load group: ' + errText, true);
+                    return;
+                }
+                const data = await res.json();
+                
+                currentGroupMembers = data.group?.group_members || [];
+                
+                document.getElementById('groupName').textContent = data.group?.group_name || 'Group';
+                document.getElementById('groupMembers').innerHTML = currentGroupMembers
+                    .map(m => `<span class="member-chip">${m.user_name}</span>`).join('');
+                
+                // Populate "Paid By" dropdown
+                const paidBySelect = document.getElementById('expensePaidBy');
+                paidBySelect.innerHTML = '<option value="">Select who paid</option>' +
+                    currentGroupMembers.map(m => 
+                        `<option value="${m.user_id}">${m.user_name}</option>`
+                    ).join('');
+                
+                renderExpenses(data.expenses || []);
+                renderBalances(data.balances || []);
+                
+                showView('groupDetailView');
+            } catch (err) {
+                console.error('Error loading group:', err);
+                showToast('Failed to load group', true);
+            }
+        }
+
+        function renderExpenses(expenses) {
+            const list = document.getElementById('expensesList');
+            if (expenses.length === 0) {
+                list.innerHTML = `<div class="empty-state"><p class="empty-state-text">No expenses yet</p></div>`;
+                return;
+            }
+            list.innerHTML = expenses.map(e => {
+                // Generate splits display - show who owes the payer
+                const splitsHtml = (e.splits || [])
+                    .filter(s => s.user_id !== e.paid_by_user_id) // Exclude payer from owing themselves
+                    .map(s => `
+                        <div class="split-item">
+                            <span class="split-owes">
+                                ${s.user_name} <span class="split-arrow">→</span> ${e.paid_by_user_name}
+                            </span>
+                            <span class="split-amount">$${s.amount.toFixed(2)}</span>
+                        </div>
+                    `).join('');
+
+                return `
+                    <div class="expense-item">
+                        <div class="expense-header">
+                            <div class="expense-info">
+                                <div class="expense-desc">${e.expense_description}</div>
+                                <div class="expense-payer">Paid by ${e.paid_by_user_name}</div>
+                            </div>
+                            <div class="expense-amount">$${e.expense_amount.toFixed(2)}</div>
+                        </div>
+                        ${splitsHtml ? `
+                            <div class="expense-splits">
+                                <div class="expense-splits-title">Who owes whom</div>
+                                ${splitsHtml}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderBalances(balances) {
+            const list = document.getElementById('balancesList');
+            
+            // Filter balances relevant to current user AND with non-zero amounts
+            const myBalances = balances.filter(b => 
+                (b.from_user_id === currentUser.user_id || b.to_user_id === currentUser.user_id) &&
+                Math.abs(b.amount) > 0.10  // Filter out zero or near-zero amounts
+            );
+
+            if (myBalances.length === 0) {
+                list.innerHTML = `<div class="empty-state"><p class="empty-state-text">All settled up! ✨</p></div>`;
+                return;
+            }
+
+            list.innerHTML = myBalances.map(b => {
+                const iOwe = b.from_user_id === currentUser.user_id && b.amount > 0;
+                const amount = Math.abs(b.amount);
+                
+                // Skip if amount is effectively zero
+                if (amount < 0.10) return '';
+                
+                return `
+                    <div class="balance-item">
+                        <div class="balance-users">
+                            ${iOwe ? 'You owe' : 'You are owed by'}
+                            <strong>${iOwe ? b.to_user_name : b.from_user_name}</strong>
+                        </div>
+                        <div>
+                            <span class="balance-amount ${iOwe ? 'owes' : 'owed'}">
+                                $${amount.toFixed(2)}
+                            </span>
+                            ${iOwe && amount > 0.10 ? `<button class="settle-btn" onclick="openSettle('${b.to_user_id}', '${b.to_user_name}', ${amount})">Pay</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).filter(html => html !== '').join('');
+        }
+
+        // ============ EXPENSES ============
+        function onSplitTypeChange() {
+            const splitType = document.getElementById('splitType').value;
+            const container = document.getElementById('splitDetailsContainer');
+            const membersList = document.getElementById('splitMembersList');
+            const totalInfo = document.getElementById('splitTotalInfo');
+            
+            if (splitType === 'equal') {
+                container.style.display = 'none';
                 return;
             }
             
-            await createGroup({
-                group_id: generateId(),
-                group_name: groupName,
-                member_ids: selectedMembers
-            });
+            container.style.display = 'block';
+            const expenseAmount = parseFloat(document.getElementById('expenseAmount').value) || 0;
             
-            e.target.reset();
-            document.querySelectorAll('#memberCheckboxes .checkbox-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-        });
+            if (splitType === 'exact') {
+                membersList.innerHTML = currentGroupMembers.map(m => `
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="flex: 1; color: var(--text-secondary);">${m.user_name}</span>
+                        <input type="number" step="0.01" min="0" class="form-input split-exact-input" 
+                            data-user-id="${m.user_id}" placeholder="0.00" 
+                            style="width: 100px;" oninput="updateSplitTotal('exact')">
+                    </div>
+                `).join('');
+                totalInfo.innerHTML = `Total: <span id="splitExactTotal">$0.00</span> / $${expenseAmount.toFixed(2)}`;
+            } else if (splitType === 'percentage') {
+                membersList.innerHTML = currentGroupMembers.map(m => `
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="flex: 1; color: var(--text-secondary);">${m.user_name}</span>
+                        <input type="number" step="1" min="0" max="100" class="form-input split-percent-input" 
+                            data-user-id="${m.user_id}" placeholder="0" 
+                            style="width: 80px;" oninput="updateSplitTotal('percentage')">
+                        <span style="color: var(--text-muted);">%</span>
+                    </div>
+                `).join('');
+                totalInfo.innerHTML = `Total: <span id="splitPercentTotal">0%</span> / 100%`;
+            }
+        }
+        
+        function updateSplitTotal(type) {
+            if (type === 'exact') {
+                const inputs = document.querySelectorAll('.split-exact-input');
+                let total = 0;
+                inputs.forEach(input => total += parseFloat(input.value) || 0);
+                const totalSpan = document.getElementById('splitExactTotal');
+                const expenseAmount = parseFloat(document.getElementById('expenseAmount').value) || 0;
+                if (totalSpan) {
+                    totalSpan.textContent = `$${total.toFixed(2)}`;
+                    totalSpan.style.color = Math.abs(total - expenseAmount) < 0.01 ? 'var(--success)' : 'var(--danger)';
+                }
+            } else if (type === 'percentage') {
+                const inputs = document.querySelectorAll('.split-percent-input');
+                let total = 0;
+                inputs.forEach(input => total += parseFloat(input.value) || 0);
+                const totalSpan = document.getElementById('splitPercentTotal');
+                if (totalSpan) {
+                    totalSpan.textContent = `${total}%`;
+                    totalSpan.style.color = total === 100 ? 'var(--success)' : 'var(--danger)';
+                }
+            }
+        }
+        
+        function getSplitData() {
+            const splitType = document.getElementById('splitType').value;
+            const splitData = {};
+            
+            if (splitType === 'exact') {
+                document.querySelectorAll('.split-exact-input').forEach(input => {
+                    const amount = parseFloat(input.value) || 0;
+                    if (amount > 0) {
+                        splitData[input.dataset.userId] = amount;
+                    }
+                });
+            } else if (splitType === 'percentage') {
+                document.querySelectorAll('.split-percent-input').forEach(input => {
+                    const percent = parseFloat(input.value) || 0;
+                    if (percent > 0) {
+                        splitData[input.dataset.userId] = percent;
+                    }
+                });
+            }
+            
+            return splitData;
+        }
 
         document.getElementById('addExpenseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const description = document.getElementById('expenseDescription').value.trim();
-            const amount = parseFloat(document.getElementById('expenseAmount').value);
-            const paidByUserId = document.getElementById('paidByUser').value;
-            const groupId = document.getElementById('expenseGroup').value;
-            const splitType = document.getElementById('splitType').value;
-            
-            // Get group members for split data
-            const group = groups.find(g => g.group_id === groupId);
-            if (!group) {
-                showToast('Please select a group', true);
+            const paidByUserId = document.getElementById('expensePaidBy').value;
+            if (!paidByUserId) {
+                showToast('Please select who paid', true);
                 return;
             }
             
-            // Create split data based on split type
-            const splitData = {};
-            const members = group.group_members || [];
-            members.forEach(member => {
-                if (splitType === 'equal') {
-                    splitData[member.user_id] = amount / members.length;
-                } else if (splitType === 'percentage') {
-                    splitData[member.user_id] = 100 / members.length;
-                } else {
-                    splitData[member.user_id] = amount / members.length;
+            const splitType = document.getElementById('splitType').value;
+            const expenseAmount = parseFloat(document.getElementById('expenseAmount').value);
+            const splitData = getSplitData();
+            
+            // Validate split data
+            if (splitType === 'exact') {
+                const total = Object.values(splitData).reduce((a, b) => a + b, 0);
+                if (Math.abs(total - expenseAmount) > 0.01) {
+                    showToast(`Exact amounts must sum to $${expenseAmount.toFixed(2)} (currently $${total.toFixed(2)})`, true);
+                    return;
                 }
-            });
+            } else if (splitType === 'percentage') {
+                const total = Object.values(splitData).reduce((a, b) => a + b, 0);
+                if (total !== 100) {
+                    showToast(`Percentages must sum to 100% (currently ${total}%)`, true);
+                    return;
+                }
+            }
             
-            await addExpense({
-                expense_id: generateId(),
-                expense_description: description,
-                expense_amount: amount,
-                paid_by_user_id: paidByUserId,
-                group_id: groupId,
-                split_type: splitType,
-                split_data: splitData
+            const res = await fetch(`${API}/expenses`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    expense_description: document.getElementById('expenseDesc').value,
+                    expense_amount: expenseAmount,
+                    paid_by_user_id: paidByUserId,
+                    group_id: currentGroup,
+                    split_type: splitType,
+                    split_data: splitData
+                })
             });
-            
-            e.target.reset();
+
+            if (res.ok) {
+                showToast('Expense added!');
+                closeModal('addExpenseModal');
+                document.getElementById('addExpenseForm').reset();
+                document.getElementById('splitDetailsContainer').style.display = 'none';
+                openGroup(currentGroup);
+            } else {
+                const errText = await res.text();
+                console.error('Add expense error:', errText);
+                showToast('Failed to add expense', true);
+            }
         });
+
+        // ============ SETTLE ============
+        function openSettle(toUserId, toUserName, amount) {
+            document.getElementById('settleToName').textContent = toUserName;
+            document.getElementById('settleToUserId').value = toUserId;
+            document.getElementById('settleAmount').value = amount.toFixed(2);
+            openModal('settleModal');
+        }
 
         document.getElementById('settleForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const fromUserId = document.getElementById('settleFrom').value;
-            const toUserId = document.getElementById('settleTo').value;
-            const amount = parseFloat(document.getElementById('settleAmount').value);
-            
-            if (fromUserId === toUserId) {
-                showToast('Select different users', true);
-                return;
-            }
-            
-            await settle({
-                from_user_id: fromUserId,
-                to_user_id: toUserId,
-                amount: amount
+            const res = await fetch(`${API}/settle`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    group_id: currentGroup,
+                    to_user_id: document.getElementById('settleToUserId').value,
+                    amount: parseFloat(document.getElementById('settleAmount').value)
+                })
             });
-            
-            e.target.reset();
+
+            if (res.ok) {
+                showToast('Payment recorded!');
+                closeModal('settleModal');
+                openGroup(currentGroup);
+            } else {
+                showToast('Failed to settle', true);
+            }
         });
 
-        // Initialize
-        async function init() {
-            await Promise.all([
-                fetchUsers(),
-                fetchGroups(),
-                fetchExpenses(),
-                fetchBalances()
-            ]);
-        }
-
-        init();
+        // ============ INIT ============
+        
+        // Navigation buttons
+        document.getElementById('goToRegister').addEventListener('click', function() {
+            showView('registerView');
+        });
+        
+        document.getElementById('goToLogin').addEventListener('click', function() {
+            showView('loginView');
+        });
+        
+        checkAuth();
     </script>
 </body>
 </html>
-

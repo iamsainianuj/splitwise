@@ -1,8 +1,17 @@
 package db
 
-import "splitwise/main/internal/entity"
+import (
+	"splitwise/main/internal/entity"
+)
 
-func CreateGroup(group *entity.Group) error {
+type GroupWithBalance struct {
+	*entity.Group
+	YouOwe      float64 `json:"you_owe"`
+	YouAreOwed  float64 `json:"you_are_owed"`
+	HasPending  bool    `json:"has_pending"`
+}
+
+func CreateGroup(group *entity.Group, createdBy string) error {
 	tx, err := DB.Begin()
 	if err != nil {
 		return err
@@ -11,17 +20,17 @@ func CreateGroup(group *entity.Group) error {
 
 	// Insert group
 	_, err = tx.Exec(
-		"INSERT INTO groups (group_id, group_name) VALUES (?, ?)",
-		group.GroupID, group.GroupName,
+		"INSERT INTO groups (group_id, group_name, created_by) VALUES (?, ?, ?)",
+		group.GroupID, group.GroupName, createdBy,
 	)
 	if err != nil {
 		return err
 	}
 
-	// Insert group members
+	// Insert group members (including creator)
 	for _, member := range group.GroupMembers {
 		_, err = tx.Exec(
-			"INSERT INTO group_members (group_id, user_id) VALUES (?, ?)",
+			"INSERT OR IGNORE INTO group_members (group_id, user_id) VALUES (?, ?)",
 			group.GroupID, member.UserID,
 		)
 		if err != nil {
@@ -30,6 +39,83 @@ func CreateGroup(group *entity.Group) error {
 	}
 
 	return tx.Commit()
+}
+
+func GetUserGroups(userID string) ([]*entity.Group, error) {
+	rows, err := DB.Query(`
+		SELECT g.group_id, g.group_name, g.date_created 
+		FROM groups g
+		JOIN group_members gm ON g.group_id = gm.group_id
+		WHERE gm.user_id = ?
+		ORDER BY g.date_created DESC
+	`, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	groups := make([]*entity.Group, 0)
+	for rows.Next() {
+		group := &entity.Group{}
+		if err := rows.Scan(&group.GroupID, &group.GroupName, &group.DateCreated); err != nil {
+			return nil, err
+		}
+		group.GroupMembers, _ = GetGroupMembers(group.GroupID)
+		groups = append(groups, group)
+	}
+	return groups, nil
+}
+
+func GetUserGroupsWithBalances(userID string) ([]GroupWithBalance, error) {
+	rows, err := DB.Query(`
+		SELECT g.group_id, g.group_name, g.date_created 
+		FROM groups g
+		JOIN group_members gm ON g.group_id = gm.group_id
+		WHERE gm.user_id = ?
+		ORDER BY g.date_created DESC
+	`, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	groups := make([]GroupWithBalance, 0)
+	for rows.Next() {
+		group := &entity.Group{}
+		if err := rows.Scan(&group.GroupID, &group.GroupName, &group.DateCreated); err != nil {
+			return nil, err
+		}
+		group.GroupMembers, _ = GetGroupMembers(group.GroupID)
+		
+		// Get balance for this user in this group
+		youOwe, youAreOwed := GetUserGroupBalance(userID, group.GroupID)
+		
+		groups = append(groups, GroupWithBalance{
+			Group:      group,
+			YouOwe:     youOwe,
+			YouAreOwed: youAreOwed,
+			HasPending: youOwe > 0 || youAreOwed > 0,
+		})
+	}
+	return groups, nil
+}
+
+func GetUserGroupBalance(userID, groupID string) (youOwe float64, youAreOwed float64) {
+	// What you owe in this group
+	DB.QueryRow(`
+		SELECT COALESCE(SUM(amount), 0) 
+		FROM balances 
+		WHERE group_id = ? AND from_user_id = ? AND amount > 0.10
+	`, groupID, userID).Scan(&youOwe)
+
+	// What you're owed in this group
+	DB.QueryRow(`
+		SELECT COALESCE(SUM(amount), 0) 
+		FROM balances 
+		WHERE group_id = ? AND to_user_id = ? AND amount > 0.10
+	`, groupID, userID).Scan(&youAreOwed)
+
+	return
 }
 
 func GetAllGroups() ([]*entity.Group, error) {
@@ -45,7 +131,6 @@ func GetAllGroups() ([]*entity.Group, error) {
 		if err := rows.Scan(&group.GroupID, &group.GroupName, &group.DateCreated); err != nil {
 			return nil, err
 		}
-		// Load members
 		group.GroupMembers, _ = GetGroupMembers(group.GroupID)
 		groups = append(groups, group)
 	}
@@ -88,3 +173,19 @@ func GetGroupMembers(groupID string) ([]*entity.User, error) {
 	return members, nil
 }
 
+func IsUserInGroup(userID, groupID string) bool {
+	var count int
+	DB.QueryRow(
+		"SELECT COUNT(*) FROM group_members WHERE user_id = ? AND group_id = ?",
+		userID, groupID,
+	).Scan(&count)
+	return count > 0
+}
+
+func AddMemberToGroup(groupID, userID string) error {
+	_, err := DB.Exec(
+		"INSERT OR IGNORE INTO group_members (group_id, user_id) VALUES (?, ?)",
+		groupID, userID,
+	)
+	return err
+}

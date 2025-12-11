@@ -13,21 +13,13 @@ var DB *sql.DB
 func Init() error {
 	var err error
 
-	// Use DATABASE_URL for Turso, or local SQLite file
+	// Use DATABASE_URL for cloud, or local SQLite file
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
 		dbURL = "./splitwise.db"
 	}
 
-	// For Turso URLs, use libsql driver
-	driverName := "sqlite3"
-	if len(dbURL) > 8 && dbURL[:8] == "libsql://" {
-		// For Turso, we need to convert the URL format
-		driverName = "sqlite3"
-		dbURL = dbURL + "?_auth_token=" + os.Getenv("DATABASE_AUTH_TOKEN")
-	}
-
-	DB, err = sql.Open(driverName, dbURL)
+	DB, err = sql.Open("sqlite3", dbURL)
 	if err != nil {
 		return err
 	}
@@ -46,12 +38,16 @@ func createTables() error {
 		`CREATE TABLE IF NOT EXISTS users (
 			user_id TEXT PRIMARY KEY,
 			user_name TEXT NOT NULL,
-			user_email TEXT NOT NULL
+			user_email TEXT UNIQUE NOT NULL,
+			password_hash TEXT NOT NULL,
+			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 		)`,
 		`CREATE TABLE IF NOT EXISTS groups (
 			group_id TEXT PRIMARY KEY,
 			group_name TEXT NOT NULL,
-			date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+			created_by TEXT NOT NULL,
+			date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (created_by) REFERENCES users(user_id)
 		)`,
 		`CREATE TABLE IF NOT EXISTS group_members (
 			group_id TEXT NOT NULL,
@@ -79,12 +75,21 @@ func createTables() error {
 			FOREIGN KEY (user_id) REFERENCES users(user_id)
 		)`,
 		`CREATE TABLE IF NOT EXISTS balances (
+			group_id TEXT NOT NULL,
 			from_user_id TEXT NOT NULL,
 			to_user_id TEXT NOT NULL,
 			amount REAL NOT NULL DEFAULT 0,
-			PRIMARY KEY (from_user_id, to_user_id),
+			PRIMARY KEY (group_id, from_user_id, to_user_id),
+			FOREIGN KEY (group_id) REFERENCES groups(group_id),
 			FOREIGN KEY (from_user_id) REFERENCES users(user_id),
 			FOREIGN KEY (to_user_id) REFERENCES users(user_id)
+		)`,
+		`CREATE TABLE IF NOT EXISTS sessions (
+			token TEXT PRIMARY KEY,
+			user_id TEXT NOT NULL,
+			user_name TEXT NOT NULL DEFAULT '',
+			expires_at DATETIME NOT NULL,
+			FOREIGN KEY (user_id) REFERENCES users(user_id)
 		)`,
 	}
 
@@ -102,4 +107,3 @@ func Close() {
 		DB.Close()
 	}
 }
-

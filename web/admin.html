@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SplitWise Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #1a1a24;
+            --bg-input: #22222e;
+            --accent-primary: #ff6b6b;
+            --accent-glow: rgba(255, 107, 107, 0.15);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --danger: #ff4466;
+            --success: #00d4aa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Login Form */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            background: var(--bg-card);
+            border-radius: 16px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent-primary);
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover { opacity: 0.9; }
+
+        .error-msg {
+            background: rgba(255, 68, 102, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* Dashboard */
+        .dashboard { display: none; }
+        .dashboard.active { display: block; }
+        .login-container.hidden { display: none; }
+
+        .section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            background: var(--bg-input);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--bg-input);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .item-info { flex: 1; }
+        .item-name { font-weight: 500; }
+        .item-detail { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+        .delete-btn {
+            padding: 8px 16px;
+            background: var(--danger);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .delete-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--success);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.error { border-color: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .back-link:hover { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="container">
+        <a href="/" class="back-link">← Back to App</a>
+
+        <!-- Login -->
+        <div class="login-container" id="loginContainer">
+            <h1 class="login-title">🔐 Admin Login</h1>
+            <div class="error-msg" id="errorMsg"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <div class="header">
+                <div class="logo">🔐 Admin Panel</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    Users
+                    <span class="badge" id="userCount">0</span>
+                </div>
+                <div id="usersList"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    Groups
+                    <span class="badge" id="groupCount">0</span>
+                </div>
+                <div id="groupsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = '/api';
+
+        function showToast(msg, isError = false) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Check if already logged in as admin
+        async function checkAuth() {
+            // Clear any previous error messages
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('errorMsg').textContent = '';
+            
+            const res = await fetch(`${API}/auth/me`, { credentials: 'include' });
+            const data = await res.json();
+            if (data.success && data.user_id === 'admin') {
+                showDashboard();
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('active');
+            loadUsers();
+            loadGroups();
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const res = await fetch(`${API}/admin/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                showDashboard();
+            } else {
+                document.getElementById('errorMsg').textContent = data.message;
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+
+        async function logout() {
+            await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
+            // Clear error and show login form
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('errorMsg').textContent = '';
+            document.getElementById('loginForm').reset();
+            document.getElementById('loginContainer').classList.remove('hidden');
+            document.getElementById('dashboard').classList.remove('active');
+        }
+
+        // Load Users
+        async function loadUsers() {
+            const res = await fetch(`${API}/admin/users`, { credentials: 'include' });
+            if (!res.ok) return;
+            const users = await res.json() || [];
+
+            document.getElementById('userCount').textContent = users.length;
+            document.getElementById('usersList').innerHTML = users.map(u => `
+                <div class="item">
+                    <div class="item-info">
+                        <div class="item-name">${u.user_name}</div>
+                        <div class="item-detail">${u.user_email} • ID: ${u.user_id}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteUser('${u.user_id}', '${u.user_name}')">Delete</button>
+                </div>
+            `).join('') || '<p style="color:var(--text-muted)">No users</p>';
+        }
+
+        // Load Groups
+        async function loadGroups() {
+            const res = await fetch(`${API}/admin/groups`, { credentials: 'include' });
+            if (!res.ok) return;
+            const groups = await res.json() || [];
+
+            document.getElementById('groupCount').textContent = groups.length;
+            document.getElementById('groupsList').innerHTML = groups.map(g => `
+                <div class="item">
+                    <div class="item-info">
+                        <div class="item-name">${g.group_name}</div>
+                        <div class="item-detail">${g.group_members?.length || 0} members • ID: ${g.group_id}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteGroup('${g.group_id}', '${g.group_name}')">Delete</button>
+                </div>
+            `).join('') || '<p style="color:var(--text-muted)">No groups</p>';
+        }
+
+        // Delete User
+        async function deleteUser(userId, userName) {
+            if (!confirm(`Delete user "${userName}"?\n\nThis will remove them from all groups.`)) return;
+
+            const res = await fetch(`${API}/admin/users/delete?id=${userId}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                showToast('User deleted');
+                loadUsers();
+                loadGroups();
+            } else {
+                showToast(data.message, true);
+            }
+        }
+
+        // Delete Group
+        async function deleteGroup(groupId, groupName) {
+            if (!confirm(`Delete group "${groupName}"?\n\nThis will delete all expenses and data.`)) return;
+
+            const res = await fetch(`${API}/admin/groups/delete?id=${groupId}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                showToast('Group deleted');
+                loadGroups();
+            } else {
+                showToast(data.message, true);
+            }
+        }
+
+        checkAuth();
+    </script>
+</body>
+</html>
+

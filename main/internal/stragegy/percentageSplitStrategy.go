@@ -1,6 +1,9 @@
 package stragegy
 
-import "splitwise/main/internal/entity"
+import (
+	"math"
+	"splitwise/main/internal/entity"
+)
 
 type PercentageSplitStrategy struct {
 	Group *entity.Group `json:"group"`
@@ -14,8 +17,9 @@ func NewPercentageSplitStrategy(group *entity.Group) *PercentageSplitStrategy {
 func (p *PercentageSplitStrategy) CalculateSplits(splitData map[entity.User]float64, totalAmount float64) []*entity.Split {
 	splits := make([]*entity.Split, 0)
 	groupMembers := p.Group.GetGroupMembers()
+	myPart := 100 / len(groupMembers)
 	for _, member := range groupMembers {
-		percentage := splitData[*member]
+		percentage := math.Abs(splitData[*member] - float64(myPart))
 		amount := totalAmount * percentage / 100
 		splits = append(splits, entity.NewSplit(member, amount))
 	}
