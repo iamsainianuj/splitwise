@@ -900,6 +900,7 @@
         const API = '/api';
         let currentUser = null;
         let currentGroup = null;
+        let currentGroupMembers = [];
         let selectedMembers = [];
 
         // ============ UTILITIES ============
@@ -1182,8 +1183,6 @@
         });
 
         // ============ GROUP DETAIL ============
-        let currentGroupMembers = [];
-        
         async function openGroup(groupId) {
             currentGroup = groupId;
             
@@ -1403,13 +1402,15 @@
             
             // Validate split data
             if (splitType === 'exact') {
-                const total = Object.values(splitData).reduce((a, b) => a + b, 0);
+                const values = Object.values(splitData);
+                const total = values.length > 0 ? values.reduce((a, b) => a + b, 0) : 0;
                 if (Math.abs(total - expenseAmount) > 0.01) {
                     showToast(`Exact amounts must sum to $${expenseAmount.toFixed(2)} (currently $${total.toFixed(2)})`, true);
                     return;
                 }
             } else if (splitType === 'percentage') {
-                const total = Object.values(splitData).reduce((a, b) => a + b, 0);
+                const values = Object.values(splitData);
+                const total = values.length > 0 ? values.reduce((a, b) => a + b, 0) : 0;
                 if (total !== 100) {
                     showToast(`Percentages must sum to 100% (currently ${total}%)`, true);
                     return;
